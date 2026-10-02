@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>통합사회2 매일 괄호넣기</title>
+<title>통합과학2 매일 괄호넣기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@700&display=swap">
@@ -13,17 +13,17 @@
 /* Layout: exam-paper column (max 860px) with a sticky answer bar; teacher view is a wider data board. */
 :root{
   --bg:#f5f6f2; --paper:#ffffff; --ink:#1c2b3a; --muted:#5d6b77; --line:#d9ded8;
-  --accent:#7a3b5c; --accent-soft:#f4e6ee; --mark:#fff1b8; --ok:#1d7a4c; --ok-soft:#e2f3ea;
+  --accent:#1f5f8b; --accent-soft:#e3eef6; --mark:#fff1b8; --ok:#1d7a4c; --ok-soft:#e2f3ea;
   --bad:#b3261e; --bad-soft:#fbe7e5; --warn:#8a5a00; --warn-soft:#fdf1d8;
   --f-display:"Gowun Batang","Batang",serif; --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#12171c; --paper:#1a2129; --ink:#e6ebef; --muted:#9aa7b2; --line:#2e3943;
-  --accent:#e0a3c4; --accent-soft:#3a2230; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
+  --accent:#7fb6de; --accent-soft:#1f3242; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
   --bad:#f28b82; --bad-soft:#3a1f1d; --warn:#f0c26a; --warn-soft:#3a2f18; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12171c; --paper:#1a2129; --ink:#e6ebef; --muted:#9aa7b2; --line:#2e3943;
-  --accent:#e0a3c4; --accent-soft:#3a2230; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
+  --accent:#7fb6de; --accent-soft:#1f3242; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
   --bad:#f28b82; --bad-soft:#3a1f1d; --warn:#f0c26a; --warn-soft:#3a2f18; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
@@ -129,7 +129,7 @@ h3{font-size:1rem;margin:0 0 8px}
 <div class="wrap" id="app">
   <header class="top">
     <div>
-      <h1>통합사회2 Ⅰ·Ⅱ단원<br>매일 괄호넣기 50</h1>
+      <h1>통합과학2 Ⅰ. 변화와 다양성<br>매일 괄호넣기 50</h1>
       <p class="sub">날짜마다, 학생마다 다른 50문항이 출제됩니다. 띄어쓰기·사소한 오탈자는 정답으로 인정됩니다.</p>
     </div>
     <div class="tabs">
@@ -144,8 +144,9 @@ h3{font-size:1rem;margin:0 0 8px}
 <script>
 "use strict";
 // ======================================================================
+//  ★ 설정: Apps Script 웹 앱 주소를 아래 따옴표 안에 붙여넣으세요 ★
 // ======================================================================
-const API_URL = "https://script.google.com/macros/s/AKfycbwdknKor86ao9n5wpFwueCYSy-1_qR-IbewmnP6kI9dcwN6oQYVf_dihtA39sZb-sMbVA/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbw6AiN-VxZuymq4-_XKa13O7wTKbvesofgfCyEoEBH9BYuRa-paf8NPIvyKPbL6rzWZyw/exec";
 const K = 50;
 const $ = s => document.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
@@ -163,9 +164,9 @@ async function api(action, payload={}){
 }
 
 // ---------------- student ----------------
-let CFG = null, ident = store("sh50-ident") || {cls:"",num:"",name:""};
+let CFG = null, ident = store("gh50-ident") || {cls:"",num:"",name:""};
 let stage = "loading", quiz = null, draft = [], cur = 0, result = null, confirming=false, busy=false;
-const draftKey = () => quiz ? `sh50:${quiz.date}|${quiz.scope}|${ident.cls}-${ident.num}-${ident.name}|${quiz.attempt}` : "";
+const draftKey = () => quiz ? `gh50:${quiz.date}|${quiz.scope}|${ident.cls}-${ident.num}-${ident.name}|${quiz.attempt}` : "";
 
 function renderStudent(){
   const el=$("#studentView");
@@ -183,7 +184,7 @@ function renderStudent(){
     </div>
     <label>시험 범위</label>
     <div class="scopes">${CFG?Object.entries(CFG.scopes).map(([k,s])=>{ const off=fixed&&fixed!==k, done=CFG.mine&&CFG.mine[k];
-      return `<button class="scope" data-scope="${k}" ${off?"disabled":""}><b>${s.label}</b><span>${esc(s.full)} · ${CFG.sizes[k]}문항 중 ${K}</span>${done?`<em>오늘 응시함 · ${done.score}/${done.total}</em>`:""}</button>`;}).join(""):""}</div>
+      return `<button class="scope" data-scope="${k}" ${off?"disabled":""}><b>${s.label}</b><span>${esc(s.full)} · ${CFG.sizes[k]}문항 중 ${K}</span>${done?`<em>오늘 ${done.count}회 응시 · 최근 ${done.score}/${done.total}</em>`:""}</button>`;}).join(""):""}</div>
     ${fixed?`<p class="muted" style="font-size:.85rem;margin:8px 0 0">오늘은 선생님이 <b>${CFG.scopes[fixed].label}</b> 범위로 지정했습니다.</p>`:""}
     <div class="err" id="iErr"></div></div>`;
   el.querySelectorAll("[data-scope]").forEach(b=>b.onclick=async()=>{
@@ -191,7 +192,7 @@ function renderStudent(){
     if(!ident.cls){ $("#iErr").textContent="반을 선택하세요."; return; }
     if(!(+ident.num>=1 && +ident.num<=40)){ $("#iErr").textContent="번호를 1~40 사이 숫자로 입력하세요."; return; }
     if(ident.name.length<2){ $("#iErr").textContent="이름을 정확히 입력하세요."; return; }
-    store("sh50-ident",ident); await begin(b.dataset.scope,false);
+    store("gh50-ident",ident); await begin(b.dataset.scope,false);
   });
 }
 async function begin(scope, retry){
@@ -207,7 +208,7 @@ function renderQuiz(el){
   const qs=quiz.questions, n=qs.length; if(cur<0||cur>=n) cur=0;
   const q=qs[cur], last=cur===n-1, filled=draft.filter(x=>String(x).trim()).length;
   el.innerHTML=`
-    <div class="bar"><span class="who">${fmtDate(quiz.date)} · ${CFG.scopes[quiz.scope].label} · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</span>
+    <div class="bar"><span class="who">${fmtDate(quiz.date)} · ${CFG.scopes[quiz.scope].label} ${quiz.attempt}회차 · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</span>
       <div class="prog"><div class="track"><div class="fill" id="pf" style="width:${filled*100/n}%"></div></div><small id="pt">입력 ${filled} / ${n}</small></div></div>
     <div class="one card">
       <div class="onehead"><span class="qno">${cur+1}<small> / ${n}</small></span><span class="unit">${esc(CFG.sections[q.si])}</span></div>
@@ -238,13 +239,13 @@ function renderSubmitArea(){
   const a=$("#submitArea"); if(!a) return;
   if(!confirming){ a.innerHTML=""; return; }
   const blanks=draft.filter(x=>!String(x).trim()).length;
-  a.innerHTML=`<div class="confirm"><span>${blanks?`빈칸이 <b>${blanks}개</b> 남아 있습니다. `:""}${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}(으)로 제출할까요?${quiz.allowRetry?"":" 제출 후에는 오늘 이 범위를 다시 볼 수 없습니다."}</span>
+  a.innerHTML=`<div class="confirm"><span>${blanks?`빈칸이 <b>${blanks}개</b> 남아 있습니다. `:""}${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}(으)로 제출할까요?${quiz.allowRetry?" 제출한 뒤에도 새 문제로 다시 풀 수 있습니다.":" 제출 후에는 오늘 이 범위를 다시 볼 수 없습니다."}</span>
     <span style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap">${blanks?`<button id="cBlank">빈 문항으로 가기</button>`:""}<button id="cNo">계속 풀기</button><button class="primary" id="cYes" ${busy?"disabled":""}>${busy?"채점 중…":"제출"}</button></span></div><div class="err" id="subErr"></div>`;
   $("#cNo").onclick=()=>{confirming=false;renderSubmitArea();};
   const cb=$("#cBlank"); if(cb) cb.onclick=()=>{ cur=draft.findIndex(x=>!String(x).trim()); confirming=false; renderStudent(); };
   $("#cYes").onclick=async()=>{
     if(busy) return; busy=true; renderSubmitArea();
-    try{ const r=await api("submit",{ident, scope:quiz.scope, date:quiz.date, attempt:quiz.attempt, answers:draft});
+    try{ const r=await api("submit",{ident, scope:quiz.scope, date:quiz.date, attempt:quiz.attempt, qs:quiz.qs, answers:draft});
       store(draftKey(),null); busy=false; confirming=false; result=r.result; stage="result"; if(r.note) notice(r.note,"info"); renderStudent(); window.scrollTo(0,0); }
     catch(e){ busy=false; renderSubmitArea(); $("#subErr").textContent=e.message; }
   };
@@ -253,7 +254,7 @@ function renderResult(el){
   const r=result, wrong=r.items.filter(x=>!x.ok);
   el.innerHTML=`<div class="card" style="margin-bottom:16px">
     <div class="score"><span class="big">${r.score}<span class="muted" style="font-size:1.2rem"> / ${r.total}</span></span>
-    <span><b>제출 완료</b> · ${fmtDate(r.date)} ${esc(CFG.scopes[r.scope].label)}<br><span class="muted">${esc(r.cls)}반 ${esc(r.num)}번 ${esc(r.name)} · 틀린 문항 ${wrong.length}개</span></span></div>
+    <span><b>제출 완료</b> · ${fmtDate(r.date)} ${esc(CFG.scopes[r.scope].label)} ${r.attempts}회차<br><span class="muted">${esc(r.cls)}반 ${esc(r.num)}번 ${esc(r.name)} · 틀린 문항 ${wrong.length}개</span></span></div>
     ${r.showAnswers?`<div class="toolbar" style="margin:12px 0 0"><label class="switch" style="margin:0"><input type="checkbox" id="onlyWrong"> 틀린 문항만 보기</label></div>`:`<p class="muted" style="margin:10px 0 0">정답은 선생님이 공개하면 표시됩니다.</p>`}
     <div class="submitrow"><button id="home">처음 화면</button>${r.allowRetry?`<button class="primary" id="retry">새 문제로 다시 풀기</button>`:""}</div></div>
     <div id="ansList"></div>`;
@@ -272,13 +273,15 @@ async function refreshCfg(){
 }
 
 // ---------------- teacher ----------------
-let pw=null; try{ pw=sessionStorage.getItem("sh50-pw"); }catch(e){}
-let T=null, fDate=null, fScope="any", fCls="all", openRow=null, rowArm=null, resetStage=0, tBusy=false, poll=null;
+let pw=null; try{ pw=sessionStorage.getItem("gh50-pw"); }catch(e){}
+let T=null, fDate=null, fScope="any", fCls="all", fLast=false, openRow=null, rowArm=null, resetStage=0, tBusy=false, poll=null;
+let tQueue=null;
 async function tcall(action, extra={}){
-  if(tBusy) return; tBusy=true;
+  if(tBusy){ if(action!=="tData"||!tQueue) tQueue=[action,extra]; return; } tBusy=true;
   try{ T=await api(action,{pw, date:fDate||undefined, ...extra}); fDate=T.date; }
-  catch(e){ notice(e.message,"bad"); if(/비밀번호/.test(e.message)){ pw=null; try{sessionStorage.removeItem("sh50-pw");}catch(_){} } }
+  catch(e){ notice(e.message,"bad"); if(/비밀번호/.test(e.message)){ pw=null; try{sessionStorage.removeItem("gh50-pw");}catch(_){} } }
   tBusy=false; if(!$("#teacherView").hidden) renderTeacher();
+  if(tQueue){ const [a,x]=tQueue; tQueue=null; tcall(a,x); }
 }
 function renderTeacher(){
   const el=$("#teacherView");
@@ -287,15 +290,17 @@ function renderTeacher(){
       <form id="pwForm" style="display:flex;gap:8px"><input id="pw" type="password" inputmode="numeric" autocomplete="off" aria-label="비밀번호" placeholder="비밀번호"><button class="primary" type="submit">확인</button></form><div class="err" id="pwErr"></div></div>`;
     $("#pw").focus();
     $("#pwForm").addEventListener("submit",async e=>{ e.preventDefault(); const v=$("#pw").value.trim();
-      try{ T=await api("tData",{pw:v}); pw=v; fDate=T.date; try{sessionStorage.setItem("sh50-pw",v);}catch(_){} notice(""); renderTeacher(); startPoll(); }
+      try{ T=await api("tData",{pw:v}); pw=v; fDate=T.date; try{sessionStorage.setItem("gh50-pw",v);}catch(_){} notice(""); renderTeacher(); startPoll(); }
       catch(err){ $("#pwErr").textContent=err.message; } });
     return;
   }
   if(!T){ el.innerHTML=`<div class="card">불러오는 중입니다…</div>`; tcall("tData"); return; }
   const Qd=T.questions, SC=CFG?CFG.scopes:{u1:{label:"1단원"},u2:{label:"2단원"},all:{label:"전체"}};
   const classes=[...new Set(T.list.map(r=>r.cls))].sort((a,b)=>a-b);
-  const list=T.list.filter(r=>(fScope==="any"||r.scope===fScope)&&(fCls==="all"||String(r.cls)===fCls))
-    .sort((a,b)=>(b.date>a.date?1:b.date<a.date?-1:0)||a.cls-b.cls||a.num-b.num||a.scope.localeCompare(b.scope));
+  let base=T.list.filter(r=>(fScope==="any"||r.scope===fScope)&&(fCls==="all"||String(r.cls)===fCls));
+  if(fLast){ const best={}; base.forEach(r=>{ const k=r.date+"|"+r.scope+"|"+r.cls+"-"+r.num; if(!best[k]||r.attempts>best[k].attempts) best[k]=r; }); base=Object.values(best); }
+  const list=base
+    .sort((a,b)=>(b.date>a.date?1:b.date<a.date?-1:0)||a.cls-b.cls||a.num-b.num||a.scope.localeCompare(b.scope)||a.attempts-b.attempts);
   const n=list.length, avg=n?list.reduce((t,s)=>t+s.score,0)/n:0, hi=n?Math.max(...list.map(s=>s.score)):0, lo=n?Math.min(...list.map(s=>s.score)):0;
   const asked=Array(Qd.length).fill(0), right=Array(Qd.length).fill(0);
   list.forEach(s=>s.items.forEach(x=>{asked[x.qi]++; if(x.ok) right[x.qi]++;}));
@@ -309,6 +314,8 @@ function renderTeacher(){
       <select id="fScope"><option value="any">전체 보기</option>${Object.entries(SC).map(([k,s])=>`<option value="${k}" ${k===fScope?"selected":""}>${s.label}</option>`).join("")}</select>
       <label for="fCls" style="margin:0">반</label>
       <select id="fCls"><option value="all">전체</option>${classes.map(c=>`<option value="${c}" ${String(c)===fCls?"selected":""}>${c}반</option>`).join("")}</select>
+      <label for="fLast" style="margin:0">기록</label>
+      <select id="fLast"><option value="all" ${fLast?"":"selected"}>모든 회차</option><option value="last" ${fLast?"selected":""}>학생별 마지막 회차만</option></select>
       <button id="refresh">새로고침</button>
       <a class="btn" href="${esc(T.sheetUrl)}" target="_blank" rel="noopener">구글 시트에서 보기</a>
       <span style="flex:1"></span>
@@ -318,17 +325,17 @@ function renderTeacher(){
     </div>
     <div id="rstArea"></div>
     <div class="tiles">
-      <div class="tile"><span>응시 건수</span><b>${n}</b></div>
+      <div class="tile"><span>응시 건수 (학생 ${new Set(list.map(s=>s.cls+"-"+s.num)).size}명)</span><b>${n}</b></div>
       <div class="tile"><span>평균 점수 (${K}점 만점)</span><b>${avg.toFixed(1)}</b></div>
       <div class="tile"><span>최고 / 최저</span><b>${n?hi+" / "+lo:"–"}</b></div>
     </div>
     <div class="tblwrap"><table>
-      <thead><tr><th>날짜</th><th>범위</th><th>반</th><th>번호</th><th>이름</th><th class="num">점수</th><th>제출</th><th class="num">응시</th><th></th></tr></thead>
+      <thead><tr><th>날짜</th><th>범위</th><th>반</th><th>번호</th><th>이름</th><th class="num">점수</th><th>제출</th><th class="num">회차</th><th></th></tr></thead>
       <tbody>${n?list.map(s=>`<tr><td>${fmtDate(s.date)}</td><td>${esc((SC[s.scope]||{}).label||s.scope)}</td><td>${esc(s.cls)}</td><td>${esc(s.num)}</td><td>${esc(s.name)}</td>
         <td class="num"><span class="pill ${pct(s)>=80?"hi":pct(s)>=60?"mid":"lo"}">${s.score} / ${s.total}</span></td><td>${esc(String(s.submittedAt).slice(0,5))}</td><td class="num">${s.attempts}</td>
         <td style="display:flex;gap:6px"><button data-open="${esc(s.key)}" style="padding:3px 10px;font-size:.82rem">${openRow===s.key?"닫기":"오답 보기"}</button>
         <button class="danger ${rowArm===s.key?"solid":""}" data-reset="${esc(s.key)}" style="padding:3px 10px;font-size:.82rem">${rowArm===s.key?"한 번 더 누르면 리셋":"리셋"}</button></td></tr>
-        ${openRow===s.key?detailRow(s,Qd):""}`).join(""):`<tr><td colspan="9" class="muted" style="white-space:normal">이 조건에 맞는 응시 기록이 없습니다. 제출이 들어오면 30초마다 자동으로 갱신됩니다.</td></tr>`}</tbody>
+        ${openRow===s.key?detailRow(s,Qd):""}`).join(""):`<tr><td colspan="9" class="muted" style="white-space:normal">이 조건에 맞는 응시 기록이 없습니다. 제출이 들어오면 20초마다 자동으로 갱신됩니다.</td></tr>`}</tbody>
     </table></div>
     <div class="grid2">
       <div class="card"><h3>많이 틀린 문항 ${n?"(출제된 학생 중 정답률)":""}</h3>${n?worst.map(w=>`<div class="qstat"><span class="n">${w.i+1}</span><span class="t" title="${esc(Qd[w.i].b+"( "+Qd[w.i].a+" )"+Qd[w.i].c)}">${esc(Qd[w.i].a)} · ${esc(Qd[w.i].b.slice(0,22))}…</span><span class="num" title="${w.k}명 출제">${Math.round(w.a*100)}%</span><span class="qbar"><i style="width:${Math.round((1-w.a)*100)}%"></i></span></div>`).join(""):`<p class="muted">제출이 들어오면 문항별 정답률이 계산됩니다.</p>`}</div>
@@ -336,16 +343,17 @@ function renderTeacher(){
         <label for="sScope">시험 범위</label>
         <select id="sScope" style="width:auto;margin-bottom:8px"><option value="">학생이 선택</option>${Object.entries(SC).map(([k,s])=>`<option value="${k}" ${T.settings.fixedScope===k?"selected":""}>${s.label}만</option>`).join("")}</select>
         <label class="switch"><input type="checkbox" id="sShow" ${T.settings.showAnswers?"checked":""}> 제출 후 학생에게 정답 공개</label>
-        <label class="switch"><input type="checkbox" id="sRetry" ${T.settings.allowRetry?"checked":""}> 같은 날 다시 풀기 허용 (새 문제로 출제)</label>
+        <label class="switch"><input type="checkbox" id="sRetry" ${T.settings.allowRetry?"checked":""}> 같은 날 다시 풀기 허용 (매번 새 문제 · 회차마다 결과가 따로 기록됨)</label>
         <p class="muted" style="font-size:.85rem">띄어쓰기·사소한 오탈자는 자동으로 정답 처리됩니다. 오답 보기에서 ‘인정’을 누르면 그 문항을 직접 정답 처리할 수 있습니다.</p></div>
     </div>`;
   $("#fDate").onchange=e=>{fDate=e.target.value;openRow=null;tcall("tData");};
   $("#fScope").onchange=e=>{fScope=e.target.value;renderTeacher();};
   $("#fCls").onchange=e=>{fCls=e.target.value;renderTeacher();};
+  $("#fLast").onchange=e=>{fLast=e.target.value==="last";renderTeacher();};
   $("#refresh").onclick=()=>tcall("tData");
-  $("#lockBtn").onclick=()=>{ pw=null; T=null; openRow=null; stopPoll(); try{sessionStorage.removeItem("sh50-pw");}catch(e){} show("student"); };
+  $("#lockBtn").onclick=()=>{ pw=null; T=null; openRow=null; stopPoll(); try{sessionStorage.removeItem("gh50-pw");}catch(e){} show("student"); };
   el.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{openRow=openRow===b.dataset.open?null:b.dataset.open;renderTeacher();});
-  el.querySelectorAll("[data-reset]").forEach(b=>b.onclick=()=>{ const k=b.dataset.reset; if(rowArm===k){ rowArm=null; openRow=null; tcall("tResetOne",{key:k}); } else { rowArm=k; renderTeacher(); } });
+  el.querySelectorAll("[data-reset]").forEach(b=>b.onclick=()=>{ const k=b.dataset.reset; if(rowArm===k){ rowArm=null; openRow=null; tcall("tResetOne",{key:k}); } else { rowArm=k; renderTeacher(); setTimeout(()=>{ if(rowArm===k){ rowArm=null; renderTeacher(); } },5000); } });
   el.querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>tcall("tOverride",{key:b.dataset.key, qi:+b.dataset.ov, on:b.dataset.on==="1"}));
   $("#rstDay").onclick=()=>{resetStage="day";renderReset();};
   $("#rstAll").onclick=()=>{resetStage="all";renderReset();};
@@ -370,7 +378,7 @@ function renderReset(){
   $("#rNo").onclick=()=>{resetStage=0;renderReset();};
   $("#rYes").onclick=async()=>{ const m=resetStage, d=fDate; resetStage=0; await tcall(m==="all"?"tResetAll":"tResetDay",{day:d}); notice(m==="all"?"모든 기록을 지웠습니다.":`${fmtDate(d)} 기록을 지웠습니다.`,"info"); };
 }
-function startPoll(){ stopPoll(); poll=setInterval(()=>{ if(pw && !$("#teacherView").hidden && !resetStage && !openRow && !rowArm) tcall("tData"); },30000); }
+function startPoll(){ stopPoll(); poll=setInterval(()=>{ if(pw && !$("#teacherView").hidden && !resetStage && !rowArm) tcall("tData"); },20000); }
 function stopPoll(){ if(poll) clearInterval(poll); poll=null; }
 
 // ---------------- tabs & boot ----------------
@@ -379,7 +387,7 @@ function show(tab){
   $("#studentView").hidden=t; $("#teacherView").hidden=!t;
   $("#tabStudent").setAttribute("aria-pressed",String(!t)); $("#tabTeacher").setAttribute("aria-pressed",String(t));
   $("#app").classList.toggle("wide",t); notice("");
-  if(t){ renderTeacher(); if(pw) startPoll(); } else { stopPoll(); renderStudent(); }
+  if(t){ renderTeacher(); if(pw){ startPoll(); if(T) tcall("tData"); } } else { stopPoll(); renderStudent(); }
 }
 $("#tabStudent").onclick=()=>show("student");
 $("#tabTeacher").onclick=()=>show("teacher");
