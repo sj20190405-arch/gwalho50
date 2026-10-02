@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>통합과학2 매일 괄호넣기</title>
+<title>통합사회2 매일 괄호넣기</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@700&display=swap">
@@ -13,17 +13,17 @@
 /* Layout: exam-paper column (max 860px) with a sticky answer bar; teacher view is a wider data board. */
 :root{
   --bg:#f5f6f2; --paper:#ffffff; --ink:#1c2b3a; --muted:#5d6b77; --line:#d9ded8;
-  --accent:#1f5f8b; --accent-soft:#e3eef6; --mark:#fff1b8; --ok:#1d7a4c; --ok-soft:#e2f3ea;
+  --accent:#7a3b5c; --accent-soft:#f4e6ee; --mark:#fff1b8; --ok:#1d7a4c; --ok-soft:#e2f3ea;
   --bad:#b3261e; --bad-soft:#fbe7e5; --warn:#8a5a00; --warn-soft:#fdf1d8;
   --f-display:"Gowun Batang","Batang",serif; --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#12171c; --paper:#1a2129; --ink:#e6ebef; --muted:#9aa7b2; --line:#2e3943;
-  --accent:#7fb6de; --accent-soft:#1f3242; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
+  --accent:#e0a3c4; --accent-soft:#3a2230; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
   --bad:#f28b82; --bad-soft:#3a1f1d; --warn:#f0c26a; --warn-soft:#3a2f18; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#12171c; --paper:#1a2129; --ink:#e6ebef; --muted:#9aa7b2; --line:#2e3943;
-  --accent:#7fb6de; --accent-soft:#1f3242; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
+  --accent:#e0a3c4; --accent-soft:#3a2230; --mark:#4a4020; --ok:#6fcf9b; --ok-soft:#173327;
   --bad:#f28b82; --bad-soft:#3a1f1d; --warn:#f0c26a; --warn-soft:#3a2f18; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
@@ -129,7 +129,7 @@ h3{font-size:1rem;margin:0 0 8px}
 <div class="wrap" id="app">
   <header class="top">
     <div>
-      <h1>통합과학2 Ⅰ. 변화와 다양성<br>매일 괄호넣기 50</h1>
+      <h1>통합사회2 Ⅰ·Ⅱ단원<br>매일 괄호넣기 50</h1>
       <p class="sub">날짜마다, 학생마다 다른 50문항이 출제됩니다. 띄어쓰기·사소한 오탈자는 정답으로 인정됩니다.</p>
     </div>
     <div class="tabs">
@@ -144,9 +144,8 @@ h3{font-size:1rem;margin:0 0 8px}
 <script>
 "use strict";
 // ======================================================================
-//  ★ 설정: Apps Script 웹 앱 주소를 아래 따옴표 안에 붙여넣으세요 ★
 // ======================================================================
-const API_URL = "https://script.google.com/macros/s/AKfycbw6AiN-VxZuymq4-_XKa13O7wTKbvesofgfCyEoEBH9BYuRa-paf8NPIvyKPbL6rzWZyw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwdknKor86ao9n5wpFwueCYSy-1_qR-IbewmnP6kI9dcwN6oQYVf_dihtA39sZb-sMbVA/exec";
 const K = 50;
 const $ = s => document.querySelector(s);
 const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
@@ -164,9 +163,9 @@ async function api(action, payload={}){
 }
 
 // ---------------- student ----------------
-let CFG = null, ident = store("gh50-ident") || {cls:"",num:"",name:""};
+let CFG = null, ident = store("sh50-ident") || {cls:"",num:"",name:""};
 let stage = "loading", quiz = null, draft = [], cur = 0, result = null, confirming=false, busy=false;
-const draftKey = () => quiz ? `gh50:${quiz.date}|${quiz.scope}|${ident.cls}-${ident.num}-${ident.name}|${quiz.attempt}` : "";
+const draftKey = () => quiz ? `sh50:${quiz.date}|${quiz.scope}|${ident.cls}-${ident.num}-${ident.name}|${quiz.attempt}` : "";
 
 function renderStudent(){
   const el=$("#studentView");
@@ -192,7 +191,7 @@ function renderStudent(){
     if(!ident.cls){ $("#iErr").textContent="반을 선택하세요."; return; }
     if(!(+ident.num>=1 && +ident.num<=40)){ $("#iErr").textContent="번호를 1~40 사이 숫자로 입력하세요."; return; }
     if(ident.name.length<2){ $("#iErr").textContent="이름을 정확히 입력하세요."; return; }
-    store("gh50-ident",ident); await begin(b.dataset.scope,false);
+    store("sh50-ident",ident); await begin(b.dataset.scope,false);
   });
 }
 async function begin(scope, retry){
@@ -273,13 +272,13 @@ async function refreshCfg(){
 }
 
 // ---------------- teacher ----------------
-let pw=null; try{ pw=sessionStorage.getItem("gh50-pw"); }catch(e){}
+let pw=null; try{ pw=sessionStorage.getItem("sh50-pw"); }catch(e){}
 let T=null, fDate=null, fScope="any", fCls="all", fLast=false, openRow=null, rowArm=null, resetStage=0, tBusy=false, poll=null;
 let tQueue=null;
 async function tcall(action, extra={}){
   if(tBusy){ if(action!=="tData"||!tQueue) tQueue=[action,extra]; return; } tBusy=true;
   try{ T=await api(action,{pw, date:fDate||undefined, ...extra}); fDate=T.date; }
-  catch(e){ notice(e.message,"bad"); if(/비밀번호/.test(e.message)){ pw=null; try{sessionStorage.removeItem("gh50-pw");}catch(_){} } }
+  catch(e){ notice(e.message,"bad"); if(/비밀번호/.test(e.message)){ pw=null; try{sessionStorage.removeItem("sh50-pw");}catch(_){} } }
   tBusy=false; if(!$("#teacherView").hidden) renderTeacher();
   if(tQueue){ const [a,x]=tQueue; tQueue=null; tcall(a,x); }
 }
@@ -290,7 +289,7 @@ function renderTeacher(){
       <form id="pwForm" style="display:flex;gap:8px"><input id="pw" type="password" inputmode="numeric" autocomplete="off" aria-label="비밀번호" placeholder="비밀번호"><button class="primary" type="submit">확인</button></form><div class="err" id="pwErr"></div></div>`;
     $("#pw").focus();
     $("#pwForm").addEventListener("submit",async e=>{ e.preventDefault(); const v=$("#pw").value.trim();
-      try{ T=await api("tData",{pw:v}); pw=v; fDate=T.date; try{sessionStorage.setItem("gh50-pw",v);}catch(_){} notice(""); renderTeacher(); startPoll(); }
+      try{ T=await api("tData",{pw:v}); pw=v; fDate=T.date; try{sessionStorage.setItem("sh50-pw",v);}catch(_){} notice(""); renderTeacher(); startPoll(); }
       catch(err){ $("#pwErr").textContent=err.message; } });
     return;
   }
@@ -351,7 +350,7 @@ function renderTeacher(){
   $("#fCls").onchange=e=>{fCls=e.target.value;renderTeacher();};
   $("#fLast").onchange=e=>{fLast=e.target.value==="last";renderTeacher();};
   $("#refresh").onclick=()=>tcall("tData");
-  $("#lockBtn").onclick=()=>{ pw=null; T=null; openRow=null; stopPoll(); try{sessionStorage.removeItem("gh50-pw");}catch(e){} show("student"); };
+  $("#lockBtn").onclick=()=>{ pw=null; T=null; openRow=null; stopPoll(); try{sessionStorage.removeItem("sh50-pw");}catch(e){} show("student"); };
   el.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>{openRow=openRow===b.dataset.open?null:b.dataset.open;renderTeacher();});
   el.querySelectorAll("[data-reset]").forEach(b=>b.onclick=()=>{ const k=b.dataset.reset; if(rowArm===k){ rowArm=null; openRow=null; tcall("tResetOne",{key:k}); } else { rowArm=k; renderTeacher(); setTimeout(()=>{ if(rowArm===k){ rowArm=null; renderTeacher(); } },5000); } });
   el.querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>tcall("tOverride",{key:b.dataset.key, qi:+b.dataset.ov, on:b.dataset.on==="1"}));
