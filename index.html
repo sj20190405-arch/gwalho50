@@ -8,7 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Gowun+Batang:wght@700&display=swap">
 
-<style>[hidden]{display:none!important} body{margin:0}</style>
+<style>[hidden]{display:none!important} body{margin:0}.blank.hint{font-weight:700;letter-spacing:.12em;color:var(--accent);padding:0 8px}
+.blank.hint.f{letter-spacing:0;color:var(--bad)}
+.fnote{margin:-8px 0 14px;font-size:.88rem;color:var(--bad)}
+</style>
 <style>
 /* Layout: exam-paper column (max 860px) with a sticky answer bar; teacher view is a wider data board. */
 :root{
@@ -130,7 +133,7 @@ h3{font-size:1rem;margin:0 0 8px}
   <header class="top">
     <div>
       <h1>통합과학2 Ⅰ. 변화와 다양성<br>매일 괄호넣기 50</h1>
-      <p class="sub">날짜마다, 학생마다 다른 50문항이 출제됩니다. 띄어쓰기·사소한 오탈자는 정답으로 인정됩니다.</p>
+      <p class="sub">날짜마다, 학생마다, 다시 풀 때마다 다른 50문항이 출제됩니다. 빈칸의 초성을 보고 알맞은 말을 쓰세요. 화학식 문항은 반드시 화학식으로 답합니다.</p>
     </div>
     <div class="tabs">
       <button id="tabStudent" aria-pressed="true">시험 보기</button>
@@ -184,7 +187,7 @@ function renderStudent(){
     </div>
     <label>시험 범위</label>
     <div class="scopes">${CFG?Object.entries(CFG.scopes).map(([k,s])=>{ const off=fixed&&fixed!==k, done=CFG.mine&&CFG.mine[k];
-      return `<button class="scope" data-scope="${k}" ${off?"disabled":""}><b>${s.label}</b><span>${esc(s.full)} · ${CFG.sizes[k]}문항 중 ${K}</span>${done?`<em>오늘 ${done.count}회 응시 · 최근 ${done.score}/${done.total}</em>`:""}</button>`;}).join(""):""}</div>
+      return `<button class="scope" data-scope="${k}" ${off?"disabled":""}><b>${s.label}</b><span>${esc(s.full)} · ${CFG.sizes[k]}문항 중 ${K}</span>${done?`<em>오늘 ${done.count}회 응시 · 최근 ${done.score}/${done.total} · 누르면 새 문제</em>`:""}</button>`;}).join(""):""}</div>
     ${fixed?`<p class="muted" style="font-size:.85rem;margin:8px 0 0">오늘은 선생님이 <b>${CFG.scopes[fixed].label}</b> 범위로 지정했습니다.</p>`:""}
     <div class="err" id="iErr"></div></div>`;
   el.querySelectorAll("[data-scope]").forEach(b=>b.onclick=async()=>{
@@ -212,9 +215,10 @@ function renderQuiz(el){
       <div class="prog"><div class="track"><div class="fill" id="pf" style="width:${filled*100/n}%"></div></div><small id="pt">입력 ${filled} / ${n}</small></div></div>
     <div class="one card">
       <div class="onehead"><span class="qno">${cur+1}<small> / ${n}</small></span><span class="unit">${esc(CFG.sections[q.si])}</span></div>
-      <p class="onestem">${esc(q.b)}<span class="blank">(　　　)</span>${esc(q.c)}</p>
+      <p class="onestem">${esc(q.b)}<span class="blank hint ${q.k==="formula"?"f":""}">( ${esc(q.h||"　　　")} )</span>${esc(q.c)}</p>
+      ${q.k==="formula"?`<p class="fnote">※ 반드시 <b>화학식</b>으로 답하세요. (예: H₂O → H2O, Na⁺ → Na+, SO₄²⁻ → SO4 2-)</p>`:q.k==="num"?`<p class="fnote">※ 숫자로 답하세요.</p>`:""}
       <label for="ans">정답 입력</label>
-      <input id="ans" class="oneinput" type="text" autocomplete="off" enterkeyhint="${last?"done":"next"}" value="${esc(draft[cur])}" placeholder="빈칸에 들어갈 말">
+      <input id="ans" class="oneinput" type="text" autocomplete="off" enterkeyhint="${last?"done":"next"}" value="${esc(draft[cur])}" placeholder="${q.k==="formula"?"화학식 입력 (예: Cu2+)":q.k==="num"?"숫자 입력":"초성에 맞는 말 입력"}">
       <div class="onenav"><button id="prev" ${cur===0?"disabled":""}>← 이전</button>${last?`<button class="primary" id="goSubmit">제출하기</button>`:`<button class="primary" id="next">다음 →</button>`}</div>
       <p class="muted" style="font-size:.82rem;margin:8px 0 0">Enter 키를 누르면 다음 문제로 넘어갑니다.</p>
     </div>
@@ -239,7 +243,7 @@ function renderSubmitArea(){
   const a=$("#submitArea"); if(!a) return;
   if(!confirming){ a.innerHTML=""; return; }
   const blanks=draft.filter(x=>!String(x).trim()).length;
-  a.innerHTML=`<div class="confirm"><span>${blanks?`빈칸이 <b>${blanks}개</b> 남아 있습니다. `:""}${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}(으)로 제출할까요?${quiz.allowRetry?" 제출한 뒤에도 새 문제로 다시 풀 수 있습니다.":" 제출 후에는 오늘 이 범위를 다시 볼 수 없습니다."}</span>
+  a.innerHTML=`<div class="confirm"><span>${blanks?`빈칸이 <b>${blanks}개</b> 남아 있습니다. `:""}${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}(으)로 제출할까요? 제출한 뒤에도 새 문제로 다시 풀 수 있습니다.</span>
     <span style="display:flex;gap:8px;margin-left:auto;flex-wrap:wrap">${blanks?`<button id="cBlank">빈 문항으로 가기</button>`:""}<button id="cNo">계속 풀기</button><button class="primary" id="cYes" ${busy?"disabled":""}>${busy?"채점 중…":"제출"}</button></span></div><div class="err" id="subErr"></div>`;
   $("#cNo").onclick=()=>{confirming=false;renderSubmitArea();};
   const cb=$("#cBlank"); if(cb) cb.onclick=()=>{ cur=draft.findIndex(x=>!String(x).trim()); confirming=false; renderStudent(); };
@@ -256,10 +260,10 @@ function renderResult(el){
     <div class="score"><span class="big">${r.score}<span class="muted" style="font-size:1.2rem"> / ${r.total}</span></span>
     <span><b>제출 완료</b> · ${fmtDate(r.date)} ${esc(CFG.scopes[r.scope].label)} ${r.attempts}회차<br><span class="muted">${esc(r.cls)}반 ${esc(r.num)}번 ${esc(r.name)} · 틀린 문항 ${wrong.length}개</span></span></div>
     ${r.showAnswers?`<div class="toolbar" style="margin:12px 0 0"><label class="switch" style="margin:0"><input type="checkbox" id="onlyWrong"> 틀린 문항만 보기</label></div>`:`<p class="muted" style="margin:10px 0 0">정답은 선생님이 공개하면 표시됩니다.</p>`}
-    <div class="submitrow"><button id="home">처음 화면</button>${r.allowRetry?`<button class="primary" id="retry">새 문제로 다시 풀기</button>`:""}</div></div>
+    <div class="submitrow"><button id="home">처음 화면</button><button class="primary" id="retry">새 문제로 다시 풀기</button></div></div>
     <div id="ansList"></div>`;
   const draw=only=>{ $("#ansList").innerHTML = r.showAnswers ? CFG.sections.map((t,si)=>{ const rows=r.items.filter(x=>x.si===si && (!only||!x.ok)); if(!rows.length) return "";
-      return `<section class="sec"><h2>${esc(t)}</h2><ol class="qs">${rows.map(x=>`<li class="${x.ok?"r-ok":"r-bad"}"><span class="n">${x.p+1}.</span><span class="stem">${esc(x.b)}<input type="text" disabled value="${esc(x.ans||"(빈칸)")}">${esc(x.c)}
+      return `<section class="sec"><h2>${esc(t)}</h2><ol class="qs">${rows.map(x=>`<li class="${x.ok?"r-ok":"r-bad"}"><span class="n">${x.p+1}.</span><span class="stem">${esc(x.b)}<span class="blank hint" style="font-size:.85em">${esc(x.h||"")}</span><input type="text" disabled value="${esc(x.ans||"(빈칸)")}">${esc(x.c)}
         <span class="fb ${x.ok?"ok":"bad"}">${x.ok?"○ 정답":"✕ 오답"} · 정답: <b>${esc(x.correct)}</b></span></span></li>`).join("")}</ol></section>`; }).join("") : ""; };
   draw(false);
   const ow=$("#onlyWrong"); if(ow) ow.onchange=e=>draw(e.target.checked);
@@ -343,7 +347,7 @@ function renderTeacher(){
         <label for="sScope">시험 범위</label>
         <select id="sScope" style="width:auto;margin-bottom:8px"><option value="">학생이 선택</option>${Object.entries(SC).map(([k,s])=>`<option value="${k}" ${T.settings.fixedScope===k?"selected":""}>${s.label}만</option>`).join("")}</select>
         <label class="switch"><input type="checkbox" id="sShow" ${T.settings.showAnswers?"checked":""}> 제출 후 학생에게 정답 공개</label>
-        <label class="switch"><input type="checkbox" id="sRetry" ${T.settings.allowRetry?"checked":""}> 같은 날 다시 풀기 허용 (매번 새 문제 · 회차마다 결과가 따로 기록됨)</label>
+        <p class="muted" style="font-size:.85rem;margin:4px 0 0">학생은 횟수 제한 없이 다시 풀 수 있고, 다시 풀 때마다 새 문제가 나옵니다. 회차마다 결과가 따로 기록됩니다.</p>
         <p class="muted" style="font-size:.85rem">띄어쓰기·사소한 오탈자는 자동으로 정답 처리됩니다. 오답 보기에서 ‘인정’을 누르면 그 문항을 직접 정답 처리할 수 있습니다.</p></div>
     </div>`;
   $("#fDate").onchange=e=>{fDate=e.target.value;openRow=null;tcall("tData");};
@@ -359,7 +363,6 @@ function renderTeacher(){
   $("#rstAll").onclick=()=>{resetStage="all";renderReset();};
   $("#sScope").onchange=e=>tcall("tSettings",{settings:{fixedScope:e.target.value}});
   $("#sShow").onchange=e=>tcall("tSettings",{settings:{showAnswers:e.target.checked}});
-  $("#sRetry").onchange=e=>tcall("tSettings",{settings:{allowRetry:e.target.checked}});
   renderReset();
 }
 function detailRow(s,Qd){
