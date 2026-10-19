@@ -147,8 +147,8 @@ h3{font-size:1rem;margin:0 0 8px}
 <div class="wrap" id="app">
   <header class="top">
     <div>
-      <h1>공통영어2 3·4단원<br>영어단어 4지선다 50</h1>
-      <p class="sub">고른 범위의 단어 50개가 모두 나옵니다. 풀 때마다 순서와 보기가 바뀌고, 영어 → 뜻 / 뜻 → 영어 문제가 섞여 나옵니다.</p>
+      <h1>공통영어2 3·4단원<br>영어단어 4지선다</h1>
+      <p class="sub">고른 범위의 단어가 모두 나옵니다. 풀 때마다 순서와 보기가 바뀌고, 영어 → 뜻 / 뜻 → 영어 문제가 섞여 나옵니다.</p>
     </div>
     <div class="tabs">
       <button id="tabStudent" aria-pressed="true">시험 보기</button>
@@ -194,7 +194,7 @@ function renderStudent(){
   const fixed = CFG && CFG.settings.fixedScope;
   el.innerHTML=`<div class="card">
     <h3>${CFG?fmtDate(CFG.today)+" ":""}영어단어 시험</h3>
-    <p class="muted" style="margin:0">반, 번호, 이름을 입력하고 시험 범위를 고르세요. 범위마다 단어장 50개가 모두 출제되며, 다시 풀 수 있습니다.</p>
+    <p class="muted" style="margin:0">반, 번호, 이름을 입력하고 시험 범위를 고르세요. 범위마다 단어장의 단어가 모두 출제되며, 다시 풀 수 있습니다.</p>
     <div class="idgrid">
       <div><label for="iCls">반</label><select id="iCls"><option value="">선택</option>${Array.from({length:15},(_,i)=>`<option value="${i+1}" ${+ident.cls===i+1?"selected":""}>${i+1}반</option>`).join("")}</select></div>
       <div><label for="iNum">번호</label><input id="iNum" type="number" inputmode="numeric" min="1" max="40" value="${esc(ident.num)}" placeholder="예: 12"></div>
@@ -349,7 +349,7 @@ function renderTeacher(){
     <div id="rstArea"></div>
     <div class="tiles">
       <div class="tile"><span>응시 건수 (학생 ${new Set(list.map(s=>s.cls+"-"+s.num)).size}명)</span><b>${n}</b></div>
-      <div class="tile"><span>평균 점수 (${K}점 만점)</span><b>${avg.toFixed(1)}</b></div>
+      <div class="tile"><span>평균 정답률</span><b>${n?Math.round(list.reduce((t,s)=>t+s.score/s.total,0)*100/n)+"%":"–"}</b></div>
       <div class="tile"><span>최고 / 최저</span><b>${n?hi+" / "+lo:"–"}</b></div>
     </div>
     <div class="tblwrap"><table>
