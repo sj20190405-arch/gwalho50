@@ -152,6 +152,37 @@ h3{font-size:1rem;margin:0 0 8px}
 .dot.now{outline:2px solid var(--accent)}
 </style>
 
+
+<style id="minimal-white">
+/* 미니멀 화이트: 흰 바탕 · 검정 글씨 · 얇은 회색 선 · 색은 정답/오답에만 */
+:root,:root[data-theme="light"]{--bg:#ffffff;--paper:#ffffff;--ink:#111111;--muted:#737373;--line:#e6e6e6;--accent:#111111;--accent-soft:#f3f3f3;--mark:#f5f5f5;
+  --ok:#15803d;--ok-soft:#f0fdf4;--bad:#b91c1c;--bad-soft:#fef2f2;--warn:#6b6b6b;--warn-soft:#f7f7f7;
+  --f-display:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f0f0f;--paper:#0f0f0f;--ink:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--accent:#f2f2f2;--accent-soft:#1c1c1c;--mark:#1a1a1a;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#a3a3a3;--warn-soft:#1a1a1a}}
+:root[data-theme="dark"]{--bg:#0f0f0f;--paper:#0f0f0f;--ink:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--accent:#f2f2f2;--accent-soft:#1c1c1c;--mark:#1a1a1a;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#a3a3a3;--warn-soft:#1a1a1a}
+h1{font-weight:700;letter-spacing:-.02em;font-size:1.6rem}
+header.top{border-bottom:1px solid var(--ink)}
+.card,.bar,.tile,.tblwrap,.grid-nav{border-radius:6px;box-shadow:none}
+.bar{box-shadow:none}
+button,.btn{border-radius:6px}
+button.primary{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+section.sec h2{background:none;color:var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding:4px 0}
+.dir{background:none;border:1px solid var(--line);color:var(--muted);font-weight:500}
+.qno{font-family:var(--f-body);font-weight:700}
+.scope b{color:var(--ink)}
+.scope:hover:not([disabled]){background:var(--accent-soft);border-color:var(--ink)}
+.opt[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--ink)}
+.opt[aria-pressed="true"] .k{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.slot{background:var(--paper);border:1px dashed #c8c8c8}
+.slot .chip{background:var(--accent-soft);border-color:var(--ink)}
+.chip,.prompt.en,.rrow .en,.wrong .en{font-family:var(--f-body)}
+.prompt.en{font-weight:600}
+th{background:var(--accent-soft)}
+.prog .fill{background:var(--ink)}
+.dot.done{background:var(--accent-soft);border-color:var(--ink)}
+.notice.info{background:var(--accent-soft)}
+</style>
 </head>
 <body>
 <div class="wrap" id="app">
