@@ -10,7 +10,7 @@
 
 <style>[hidden]{display:none!important} body{margin:0}
 .dir{font-size:.85rem;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:2px 10px}
-.prompt{font-size:1.9rem;font-weight:700;line-height:1.35;margin:6px 0 4px;word-break:keep-all}
+.prompt{font-size:2.3rem;font-weight:800;line-height:1.35;margin:6px 0 4px;word-break:keep-all}
 .prompt.ko{font-size:1.45rem}
 .ask{color:var(--muted);margin:0 0 14px;font-size:.92rem}
 .opts{display:grid;gap:10px}
@@ -142,6 +142,58 @@ h3{font-size:1rem;margin:0 0 8px}
 .dot.now{outline:2px solid var(--accent)}
 </style>
 
+<style id="minimal-white">
+/* 미니멀 화이트 (시안 A): 연회색 바탕 · 흰 카드 · 파란 진행/선택 · 검정 주 버튼 */
+:root,:root[data-theme="light"]{--bg:#f4f5f7;--paper:#ffffff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;--accent-soft:#eaf1ff;--mark:#f3f4f6;
+  --ok:#15803d;--ok-soft:#ecfdf3;--bad:#dc2626;--bad-soft:#fef2f2;--warn:#6b7280;--warn-soft:#f3f4f6;
+  --f-display:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12;--paper:#151922;--ink:#f3f4f6;--muted:#9ca3af;--line:#262c38;--accent:#60a5fa;--accent-soft:#16233b;--mark:#1c2230;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#9ca3af;--warn-soft:#1c2230}}
+:root[data-theme="dark"]{--bg:#0b0d12;--paper:#151922;--ink:#f3f4f6;--muted:#9ca3af;--line:#262c38;--accent:#60a5fa;--accent-soft:#16233b;--mark:#1c2230;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#9ca3af;--warn-soft:#1c2230}
+h1{font-weight:800;letter-spacing:-.02em;font-size:1.5rem}
+header.top{border-bottom:1px solid var(--line)}
+.card,.tile,.tblwrap,.grid-nav{border-radius:14px;border-color:var(--line);box-shadow:none}
+button,.btn{border-radius:10px}
+button.primary{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:700}
+.tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+section.sec h2{background:none;color:var(--ink);border-bottom:1px solid var(--line);border-radius:0;padding:4px 0}
+.scope b{color:var(--ink)}
+.scope:hover:not([disabled]){background:var(--accent-soft);border-color:var(--accent)}
+/* 문제 화면 머리 */
+.bar.qtop{display:block;position:sticky;top:0;border:0;border-bottom:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;box-shadow:none}
+.qh{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.qh small{display:block;color:var(--muted);font-size:.78rem}
+.qh b{font-size:1.15rem;font-weight:800}
+.cnt{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.cnt em{font-style:normal;color:var(--accent)}
+.qtop .track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.qtop .fill{height:100%;background:var(--accent)}
+.qtop .solved{display:block;margin-top:6px;color:var(--muted);font-size:.78rem}
+/* 문제 카드 */
+.one.card{border:0;padding:20px 16px}
+.onehead{justify-content:flex-start;gap:8px;margin-bottom:8px}
+.dir{background:var(--accent-soft);color:var(--accent);border:0;font-weight:700;font-size:.78rem;border-radius:99px;padding:3px 10px}
+.tagn{font-size:.78rem;color:var(--muted);align-self:center}
+.ask{color:var(--muted)}
+.prompt{font-weight:800;letter-spacing:-.01em}
+.opts{gap:10px}
+.opt{border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:var(--paper)}
+.opt .k{background:var(--mark);border:0;color:var(--muted)}
+.opt:hover{border-color:#c7d2fe}
+.opt[aria-pressed="true"]{background:var(--paper);border:1.5px solid var(--accent);font-weight:600}
+.opt[aria-pressed="true"] .k{background:var(--accent);color:#fff}
+.onenav{gap:10px;margin-top:18px}
+.onenav button{min-width:0;padding:14px 16px;font-weight:700}
+.onenav #prev{flex:0 0 32%}
+.onenav .primary{flex:1}
+.slot{background:var(--mark);border:1px dashed #cbd5e1;border-radius:12px}
+.chip{border-radius:10px;border:1px solid var(--line);font-family:var(--f-body)}
+.slot .chip{background:var(--paper);border:1.5px solid var(--accent);color:var(--ink)}
+.prompt.en,.rrow .en,.wrong .en{font-family:var(--f-body)}
+th{background:var(--mark)}
+.prog .fill{background:var(--accent)}
+.dot.done{background:var(--accent-soft);border-color:var(--accent)}
+.notice.info{background:var(--accent-soft)}
+</style>
 </head>
 <body>
 <div class="wrap" id="app">
@@ -227,14 +279,14 @@ function renderQuiz(el){
   const qs=quiz.questions, n=qs.length; if(cur<0||cur>=n) cur=0;
   const q=qs[cur], last=cur===n-1, filled=draft.filter(isDone).length, en=q.d==="e";
   el.innerHTML=`
-    <div class="bar"><span class="who">${fmtDate(quiz.date)} · ${CFG.scopes[quiz.scope].label} ${quiz.attempt}회차 · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</span>
-      <div class="prog"><div class="track"><div class="fill" style="width:${filled*100/n}%"></div></div><small>푼 문제 ${filled} / ${n}</small></div></div>
+    <div class="bar qtop"><div class="qh"><div><small>공통영어2 · ${CFG.scopes[quiz.scope].label} · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</small><b>영어단어 시험</b></div><span class="cnt"><em>${cur+1}</em> / ${n}</span></div>
+      <div class="track"><div class="fill" style="width:${(cur+1)*100/n}%"></div></div><small class="solved">푼 문제 ${filled}개 · ${quiz.attempt}회차</small></div>
     <div class="one card">
-      <div class="onehead"><span class="qno">${cur+1}<small> / ${n}</small></span><span class="dir">${en?"영어 → 뜻":"뜻 → 영어"}</span></div>
+      <div class="onehead"><span class="dir">${en?"영어 → 한국어":"한국어 → 영어"}</span></div>
       <p class="prompt ${en?"":"ko"}" ${en?'lang="en"':""}>${esc(q.p)}</p>
       <p class="ask">${en?"알맞은 우리말 뜻을 고르세요.":"알맞은 영어 단어(숙어)를 고르세요."}</p>
       <div class="opts" role="group" aria-label="보기">${q.o.map((t,j)=>`<button class="opt ${en?"":"en"}" data-opt="${j}" aria-pressed="${Number(draft[cur])===j}" ${en?"":'lang="en"'}><span class="k">${j+1}</span><span>${esc(t)}</span></button>`).join("")}</div>
-      <div class="onenav"><button id="prev" ${cur===0?"disabled":""}>← 이전</button>${last?`<button class="primary" id="goSubmit">제출하기</button>`:`<button class="primary" id="next">다음 →</button>`}</div>
+      <div class="onenav"><button id="prev" ${cur===0?"disabled":""}>이전</button>${last?`<button class="primary" id="goSubmit">제출하기</button>`:`<button class="primary" id="next">다음 문제</button>`}</div>
       <p class="muted" style="font-size:.82rem;margin:8px 0 0">보기를 누르면 다음 문제로 넘어갑니다. (키보드 1~4 사용 가능)</p>
     </div>
     <div id="submitArea"></div>

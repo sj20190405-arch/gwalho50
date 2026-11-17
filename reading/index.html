@@ -154,33 +154,55 @@ h3{font-size:1rem;margin:0 0 8px}
 
 
 <style id="minimal-white">
-/* 미니멀 화이트: 흰 바탕 · 검정 글씨 · 얇은 회색 선 · 색은 정답/오답에만 */
-:root,:root[data-theme="light"]{--bg:#ffffff;--paper:#ffffff;--ink:#111111;--muted:#737373;--line:#e6e6e6;--accent:#111111;--accent-soft:#f3f3f3;--mark:#f5f5f5;
-  --ok:#15803d;--ok-soft:#f0fdf4;--bad:#b91c1c;--bad-soft:#fef2f2;--warn:#6b6b6b;--warn-soft:#f7f7f7;
+/* 미니멀 화이트 (시안 A): 연회색 바탕 · 흰 카드 · 파란 진행/선택 · 검정 주 버튼 */
+:root,:root[data-theme="light"]{--bg:#f4f5f7;--paper:#ffffff;--ink:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#2563eb;--accent-soft:#eaf1ff;--mark:#f3f4f6;
+  --ok:#15803d;--ok-soft:#ecfdf3;--bad:#dc2626;--bad-soft:#fef2f2;--warn:#6b7280;--warn-soft:#f3f4f6;
   --f-display:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0f0f0f;--paper:#0f0f0f;--ink:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--accent:#f2f2f2;--accent-soft:#1c1c1c;--mark:#1a1a1a;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#a3a3a3;--warn-soft:#1a1a1a}}
-:root[data-theme="dark"]{--bg:#0f0f0f;--paper:#0f0f0f;--ink:#f2f2f2;--muted:#9a9a9a;--line:#2a2a2a;--accent:#f2f2f2;--accent-soft:#1c1c1c;--mark:#1a1a1a;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#a3a3a3;--warn-soft:#1a1a1a}
-h1{font-weight:700;letter-spacing:-.02em;font-size:1.6rem}
-header.top{border-bottom:1px solid var(--ink)}
-.card,.bar,.tile,.tblwrap,.grid-nav{border-radius:6px;box-shadow:none}
-.bar{box-shadow:none}
-button,.btn{border-radius:6px}
-button.primary{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d12;--paper:#151922;--ink:#f3f4f6;--muted:#9ca3af;--line:#262c38;--accent:#60a5fa;--accent-soft:#16233b;--mark:#1c2230;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#9ca3af;--warn-soft:#1c2230}}
+:root[data-theme="dark"]{--bg:#0b0d12;--paper:#151922;--ink:#f3f4f6;--muted:#9ca3af;--line:#262c38;--accent:#60a5fa;--accent-soft:#16233b;--mark:#1c2230;--ok:#4ade80;--ok-soft:#10241a;--bad:#f87171;--bad-soft:#2a1414;--warn:#9ca3af;--warn-soft:#1c2230}
+h1{font-weight:800;letter-spacing:-.02em;font-size:1.5rem}
+header.top{border-bottom:1px solid var(--line)}
+.card,.tile,.tblwrap,.grid-nav{border-radius:14px;border-color:var(--line);box-shadow:none}
+button,.btn{border-radius:10px}
+button.primary{background:var(--ink);border-color:var(--ink);color:var(--paper);font-weight:700}
 .tabs button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
-section.sec h2{background:none;color:var(--ink);border-bottom:1px solid var(--ink);border-radius:0;padding:4px 0}
-.dir{background:none;border:1px solid var(--line);color:var(--muted);font-weight:500}
-.qno{font-family:var(--f-body);font-weight:700}
+section.sec h2{background:none;color:var(--ink);border-bottom:1px solid var(--line);border-radius:0;padding:4px 0}
 .scope b{color:var(--ink)}
-.scope:hover:not([disabled]){background:var(--accent-soft);border-color:var(--ink)}
-.opt[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--ink)}
-.opt[aria-pressed="true"] .k{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.slot{background:var(--paper);border:1px dashed #c8c8c8}
-.slot .chip{background:var(--accent-soft);border-color:var(--ink)}
-.chip,.prompt.en,.rrow .en,.wrong .en{font-family:var(--f-body)}
-.prompt.en{font-weight:600}
-th{background:var(--accent-soft)}
-.prog .fill{background:var(--ink)}
-.dot.done{background:var(--accent-soft);border-color:var(--ink)}
+.scope:hover:not([disabled]){background:var(--accent-soft);border-color:var(--accent)}
+/* 문제 화면 머리 */
+.bar.qtop{display:block;position:sticky;top:0;border:0;border-bottom:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;box-shadow:none}
+.qh{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.qh small{display:block;color:var(--muted);font-size:.78rem}
+.qh b{font-size:1.15rem;font-weight:800}
+.cnt{font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.cnt em{font-style:normal;color:var(--accent)}
+.qtop .track{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.qtop .fill{height:100%;background:var(--accent)}
+.qtop .solved{display:block;margin-top:6px;color:var(--muted);font-size:.78rem}
+/* 문제 카드 */
+.one.card{border:0;padding:20px 16px}
+.onehead{justify-content:flex-start;gap:8px;margin-bottom:8px}
+.dir{background:var(--accent-soft);color:var(--accent);border:0;font-weight:700;font-size:.78rem;border-radius:99px;padding:3px 10px}
+.tagn{font-size:.78rem;color:var(--muted);align-self:center}
+.ask{color:var(--muted)}
+.prompt{font-weight:800;letter-spacing:-.01em}
+.opts{gap:10px}
+.opt{border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:var(--paper)}
+.opt .k{background:var(--mark);border:0;color:var(--muted)}
+.opt:hover{border-color:#c7d2fe}
+.opt[aria-pressed="true"]{background:var(--paper);border:1.5px solid var(--accent);font-weight:600}
+.opt[aria-pressed="true"] .k{background:var(--accent);color:#fff}
+.onenav{gap:10px;margin-top:18px}
+.onenav button{min-width:0;padding:14px 16px;font-weight:700}
+.onenav #prev{flex:0 0 32%}
+.onenav .primary{flex:1}
+.slot{background:var(--mark);border:1px dashed #cbd5e1;border-radius:12px}
+.chip{border-radius:10px;border:1px solid var(--line);font-family:var(--f-body)}
+.slot .chip{background:var(--paper);border:1.5px solid var(--accent);color:var(--ink)}
+.prompt.en,.rrow .en,.wrong .en{font-family:var(--f-body)}
+th{background:var(--mark)}
+.prog .fill{background:var(--accent)}
+.dot.done{background:var(--accent-soft);border-color:var(--accent)}
 .notice.info{background:var(--accent-soft)}
 </style>
 </head>
@@ -188,7 +210,7 @@ th{background:var(--accent-soft)}
 <div class="wrap" id="app">
   <header class="top">
     <div>
-      <h1>공통영어2 3·4과<br>본문 문장 해석 시험</h1>
+      <h1>공통영어2 3·4과 · 모의고사<br>본문 문장 해석 시험</h1>
       <p class="sub">본문 문장이 순서대로 모두 나옵니다. 절반은 <b>맞는 해석 고르기</b>, 절반은 <b>영어 덩어리 순서 맞추기</b>이며 풀 때마다 바뀝니다.</p>
     </div>
     <div class="tabs">
@@ -270,10 +292,10 @@ function renderQuiz(el){
   if(!Array.isArray(draft[cur])) draft[cur]=[];
   const q=qs[cur], last=cur===n-1, filled=doneCount(), arr=q.t==="a", pick=draft[cur];
   el.innerHTML=`
-    <div class="bar"><span class="who">${fmtDate(quiz.date)} · ${CFG.scopes[quiz.scope].label} ${quiz.attempt}회차 · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</span>
-      <div class="prog"><div class="track"><div class="fill" style="width:${filled*100/n}%"></div></div><small>푼 문제 ${filled} / ${n}</small></div></div>
+    <div class="bar qtop"><div class="qh"><div><small>공통영어2 · ${CFG.scopes[quiz.scope].label} · ${esc(ident.cls)}반 ${esc(ident.num)}번 ${esc(ident.name)}</small><b>본문 해석 시험</b></div><span class="cnt"><em>${cur+1}</em> / ${n}</span></div>
+      <div class="track"><div class="fill" style="width:${(cur+1)*100/n}%"></div></div><small class="solved">푼 문제 ${filled}개 · ${quiz.attempt}회차</small></div>
     <div class="one card">
-      <div class="onehead"><span class="qno">${cur+1}<small> / ${n}</small></span><span class="dir">${arr?"순서 맞추기":"해석 고르기"} · 본문 ${q.n}번 문장</span></div>
+      <div class="onehead"><span class="dir">${arr?"순서 맞추기":"해석 고르기"}</span><span class="tagn">${esc(q.tag||("본문 "+q.n+"번 문장"))}</span></div>
       ${arr?`<p class="ask" style="margin:0 0 4px">우리말 해석에 맞게 영어 덩어리를 순서대로 누르세요.</p>
         <p class="prompt ko">${esc(q.p)}</p>
         <div class="slot" id="slot">${pick.map((p,k)=>`<button class="chip" data-back="${k}" lang="en">${esc(q.o[p])}</button>`).join("")}</div>
@@ -283,7 +305,7 @@ function renderQuiz(el){
         <p class="prompt en" lang="en">${esc(q.p)}</p>
         <div class="opts" role="group" aria-label="보기">${q.o.map((t,j)=>`<button class="opt ko" data-opt="${j}" aria-pressed="${pick[0]===j}"><span class="k">${j+1}</span><span>${esc(t)}</span></button>`).join("")}</div>
         <p class="muted" style="font-size:.82rem;margin:8px 0 0">보기를 누르면 다음 문제로 넘어갑니다. (키보드 1~4 사용 가능)</p>`}
-      <div class="onenav"><button id="prev" ${cur===0?"disabled":""}>← 이전</button>${last?`<button class="primary" id="goSubmit">제출하기</button>`:`<button class="primary" id="next">다음 →</button>`}</div>
+      <div class="onenav"><button id="prev" ${cur===0?"disabled":""}>이전</button>${last?`<button class="primary" id="goSubmit">제출하기</button>`:`<button class="primary" id="next">다음 문제</button>`}</div>
     </div>
     <div id="submitArea"></div>
     <details class="grid-nav"><summary>문항 번호로 이동 (안 푼 문항 ${n-filled}개)</summary>
@@ -334,7 +356,7 @@ function renderResult(el){
     <div id="ansList"></div>`;
   const draw=only=>{ $("#ansList").innerHTML = r.showAnswers ? (()=>{ const rows=r.items.filter(x=>!only||!x.ok); if(!rows.length) return "";
       return `<section class="sec"><h2>${esc(CFG.scopes[r.scope].label)} 채점 결과</h2><div style="background:var(--paper);border:1px solid var(--line);border-radius:10px">${rows.map(x=>`<div class="rrow ${x.ok?"r-ok":"r-bad"}"><span class="n">${x.p+1}.</span><span>
-        <span class="muted" style="font-size:.8rem">${x.t==="a"?"순서 맞추기":"해석 고르기"} · 본문 ${x.n}번</span><br>
+        <span class="muted" style="font-size:.8rem">${x.t==="a"?"순서 맞추기":"해석 고르기"} · ${esc(x.tag||("본문 "+x.n+"번"))}</span><br>
         <span class="pr ${x.t==="c"?"en":""}">${esc(x.prompt)}</span>
         <span class="mine">${x.ok?"○ 정답":"✕ 오답"} · 내 답: <span class="${x.t==="a"?"en":""}">${esc(x.ans||"(안 풂)")}</span></span>
         ${x.ok?"":`<span class="mine" style="color:var(--ok)">정답: <b class="${x.t==="a"?"en":""}">${esc(x.correct)}</b></span>`}</span></div>`).join("")}</div></section>`; })() : ""; };
@@ -372,7 +394,7 @@ function renderTeacher(){
     return;
   }
   if(!T){ el.innerHTML=`<div class="card">불러오는 중입니다…</div>`; tcall("tData"); return; }
-  const Qd=T.questions, SC=CFG?CFG.scopes:{r3:{label:"3과"},r4:{label:"4과"}};
+  const Qd=T.questions, SC=CFG?CFG.scopes:{r3:{label:"3과"},r4:{label:"4과"},r9:{label:"모의고사"}};
   const classes=[...new Set(T.list.map(r=>r.cls))].sort((a,b)=>a-b);
   let base=T.list.filter(r=>(fScope==="any"||r.scope===fScope)&&(fCls==="all"||String(r.cls)===fCls));
   if(fLast){ const best={}; base.forEach(r=>{ const k=r.date+"|"+r.scope+"|"+r.cls+"-"+r.num; if(!best[k]||r.attempts>best[k].attempts) best[k]=r; }); base=Object.values(best); }
@@ -415,7 +437,7 @@ function renderTeacher(){
         ${openRow===s.key?detailRow(s,Qd):""}`).join(""):`<tr><td colspan="9" class="muted" style="white-space:normal">이 조건에 맞는 응시 기록이 없습니다. 제출이 들어오면 20초마다 자동으로 갱신됩니다.</td></tr>`}</tbody>
     </table></div>
     <div class="grid2">
-      <div class="card"><h3>많이 틀린 문장 ${n?"(응시한 학생 중 정답률)":""}</h3>${n?worst.map(w=>`<div class="qstat"><span class="n">${Qd[w.i].n}</span><span class="t" title="${esc(Qd[w.i].e+" / "+Qd[w.i].k)}">${Qd[w.i].si===0?"3과":"4과"} · <span lang="en">${esc(Qd[w.i].e)}</span></span><span class="num" title="${w.k}명 출제">${Math.round(w.a*100)}%</span><span class="qbar"><i style="width:${Math.round((1-w.a)*100)}%"></i></span></div>`).join(""):`<p class="muted">제출이 들어오면 문항별 정답률이 계산됩니다.</p>`}</div>
+      <div class="card"><h3>많이 틀린 문장 ${n?"(응시한 학생 중 정답률)":""}</h3>${n?worst.map(w=>`<div class="qstat"><span class="n">${Qd[w.i].n}</span><span class="t" title="${esc(Qd[w.i].e+" / "+Qd[w.i].k)}">${["3과","4과","모의 23번","모의 24번"][Qd[w.i].si]||""} · <span lang="en">${esc(Qd[w.i].e)}</span></span><span class="num" title="${w.k}명 출제">${Math.round(w.a*100)}%</span><span class="qbar"><i style="width:${Math.round((1-w.a)*100)}%"></i></span></div>`).join(""):`<p class="muted">제출이 들어오면 문항별 정답률이 계산됩니다.</p>`}</div>
       <div class="card"><h3>시험 설정</h3>
         <label for="sScope">시험 범위</label>
         <select id="sScope" style="width:auto;margin-bottom:8px"><option value="">학생이 선택</option>${Object.entries(SC).map(([k,s])=>`<option value="${k}" ${T.settings.fixedScope===k?"selected":""}>${s.label}만</option>`).join("")}</select>
@@ -440,8 +462,8 @@ function renderTeacher(){
 }
 function detailRow(s,Qd){
   const wrong=s.items.filter(x=>!x.ok||x.ov);
-  return `<tr class="detail"><td colspan="9"><b>${esc(s.name)}</b> 틀린 문항 ${wrong.filter(x=>!x.ok).length}개 <span class="muted">(시험지 번호 · 본문 문장 번호 · 유형)</span>
-    <div class="wrong" style="grid-template-columns:1fr">${wrong.map(x=>`<div><span><b>${x.p+1}</b><span class="muted">·${Qd[x.qi].n}번 ${x.t==="a"?"순서":"해석"}</span> <span class="en" lang="en">${esc(Qd[x.qi].e)}</span><br><span class="muted">${esc(Qd[x.qi].k)}</span><br>내 답: <span style="color:var(--bad)" class="${x.t==="a"?"en":""}">${esc(x.ans||"(안 풂)")}</span></span>
+  return `<tr class="detail"><td colspan="9"><b>${esc(s.name)}</b> 틀린 문항 ${wrong.filter(x=>!x.ok).length}개 <span class="muted">(시험지 번호 · 지문 문장 번호 · 유형)</span>
+    <div class="wrong" style="grid-template-columns:1fr">${wrong.map(x=>`<div><span><b>${x.p+1}</b><span class="muted">·${esc(Qd[x.qi].tag||(Qd[x.qi].n+"번"))} ${x.t==="a"?"순서":"해석"}</span> <span class="en" lang="en">${esc(Qd[x.qi].e)}</span><br><span class="muted">${esc(Qd[x.qi].k)}</span><br>내 답: <span style="color:var(--bad)" class="${x.t==="a"?"en":""}">${esc(x.ans||"(안 풂)")}</span></span>
       <button data-key="${esc(s.key)}" data-ov="${x.qi}" data-on="${x.ov?0:1}">${x.ov?"인정 취소":"인정"}</button></div>`).join("")||"<span class='muted'>틀린 문항이 없습니다.</span>"}</div></td></tr>`;
 }
 function renderReset(){
